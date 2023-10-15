@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    FootBar: (typeof import("./components/FootBar.vue"))["default"]
     Input: typeof import('./components/Input.vue')['default']
     Landing: typeof import('./components/Landing.vue')['default']
     Modal: typeof import('./components/Modal.vue')['default']
@@ -15,18 +14,12 @@ declare module 'vue' {
     Note: typeof import('./components/Note.vue')['default']
     Notifier: typeof import('./components/Notifier.vue')['default']
     PianoKey: typeof import('./components/PianoKey.vue')['default']
-    Prices: (typeof import("./components/Prices.vue"))["default"]
-    README: (typeof import("./components/README.md"))["default"]
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sequencer: typeof import('./components/Sequencer.vue')['default']
     ServerEvent: typeof import('./components/ServerEvent.vue')['default']
     Synthetizer: typeof import('./components/Synthetizer.vue')['default']
     Tempo: typeof import('./components/Tempo.vue')['default']
-    TheCounter: (typeof import("./components/TheCounter.vue"))["default"]
-    TheFooter: (typeof import("./components/TheFooter.vue"))["default"]
-    TheInput: (typeof import("./components/TheInput.vue"))["default"]
-    TheToolbar: (typeof import("./components/TheToolbar.vue"))["default"]
     Toolbar: typeof import('./components/Toolbar.vue')['default']
   }
 }

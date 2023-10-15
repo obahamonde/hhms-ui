@@ -2,12 +2,7 @@
 	"routes": [
 		{
 			"src": "/api/(.*)",
-			"dest": "https://hhms.aiofauna.com/api/$1"
-		},
-		{
-			"src": "/(.*)",
-			"dest": "/index.html",
-			"continue": true
+			"dest": "https://ai.aiofauna.com/api/$1"
 		}
 	]
 }

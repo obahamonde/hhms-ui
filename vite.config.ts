@@ -11,7 +11,6 @@ import LinkAttributes from "markdown-it-link-attributes";
 import Unocss from "unocss/vite";
 import Shiki from "markdown-it-shiki";
 import VueMacros from "unplugin-vue-macros/vite";
-import WebfontDownload from "vite-plugin-webfont-dl";
 
 export default defineConfig({
   css: {
@@ -37,14 +36,6 @@ export default defineConfig({
     watch: {
       usePolling: true,
       ignored: ["**/node_modules/**", "**/dist/**", "**/.git/**", "**/api/**"],
-    },
-  },
-  build: {
-    rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, "src/main.ts"),
-      },
-      external: (id) => id.includes("api"),
     },
   },
 
@@ -108,9 +99,6 @@ export default defineConfig({
         });
       },
     }),
-
-    // https://github.com/feat-agency/vite-plugin-webfont-dl
-    WebfontDownload(),
 
     // https://github.com/webfansplz/vite-plugin-vue-devtools
     VueDevTools(),

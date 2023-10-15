@@ -1,0 +1,14 @@
+{
+	"version": 2,
+	"routes": [
+		{
+			"src": "/api/(.*)",
+			"dest": "https://hhms.aiofauna.com/api/$1"
+		},
+		{
+			"src": "/(.*)",
+			"dest": "/index.html",
+			"continue": true
+		}
+	]
+}

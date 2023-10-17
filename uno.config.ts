@@ -124,13 +124,13 @@ export default defineConfig({
   safelist: "prose prose-sm m-auto text-left".split(" "),
   theme: {
     colors: {
-      primary: "#2A5EC0",
-      secondary: "#16EED1",
-      accent: "#000080",
-      warning: "#fe8a71",
+      primary: "#031944",
+      secondary: "#27272A",
+      accent: "#000",
+      warning: "#E4CBCE",
       error: "#ee5253",
-      info: "#fefefe",
-      success: "#c4e538",
+      info: "#fff",
+      success: "#B6FF2E",
     },
   },
   rules: [

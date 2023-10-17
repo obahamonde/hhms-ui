@@ -1,9 +1,11 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import type { Notification } from "~/types";
+import type { Notification, User } from "~/types";
 
 export const useStore = defineStore("state", () => {
   const state = reactive({
     notifications: [] as Notification[],
+    user: undefined as User | undefined,
+    token: undefined as string | undefined,
   });
 
   const setState = (newState: any) => {

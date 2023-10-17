@@ -1,9 +1,9 @@
 ---
-title: About
+title: Nosotros
 ---
 
-# About
+# Acerca de Nosotros
 
-[BaseUI](https://github.com/obahamonde/base_ui) is an opinionated [Vite](https://github.com/vitejs/vite) starter template made by [@obahamonde](https://github.com/obahamonde) for mocking apps swiftly. With **file-based routing**, **components auto importing**, **markdown support** and uses **UnoCSS** for styling and **Iconify** for icons.
+[HHMS](https://www.facebook.com/hiphopmusicstudio/) nace inspirado en el movimiento cultural HHMC como una plataforma digital en la que productores, compositores e intérpretes del género Hip Hop pueden mostrar su trabajo, servirse de herramientas, interactuar y colaborar para hacer crecer esta comunidad, todo ello gracias al apoyo de la organización [Freesound](https://www.freesound.org) y sus recursos digitales, a fin de promover la cultura Hip Hop en el ámbito local y global.
 
-<a href="/" class="btn-del">Back</a>
+<a href="/" class="btn-get">Volver al Inicio</a>

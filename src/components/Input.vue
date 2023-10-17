@@ -2,9 +2,6 @@
 const { modelValue } = defineModels<{
   modelValue: string;
 }>();
-const props = defineProps<{
-  callback: (text: string) => Promise<T>;
-}>();
 </script>
 
 <template>
@@ -20,6 +17,5 @@ const props = defineProps<{
     border="~ rounded gray-200 dark:gray-700"
     outline="none active:none"
     placeholder="Enter your name"
-    @keydown.enter="props.callback(modelValue)"
   />
 </template>

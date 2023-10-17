@@ -3,37 +3,37 @@ import * as Tone from "tone";
 const synth = new Tone.Synth().toDestination();
 const keyPressTime = ref<number>(0);
 const sequencerStore = useSequencerStore();
-const getFullNoteInfo = (midi:number)=>{
-	const note = Tone.Frequency(midi, "midi").toNote();
-	const frequency = Tone.Frequency(midi, "midi").toFrequency();
-	return {
-		midi,
-		note,
-		frequency
-	};
+const getFullNoteInfo = (midi: number) => {
+  const note = Tone.Frequency(midi, "midi").toNote();
+  const frequency = Tone.Frequency(midi, "midi").toFrequency();
+  return {
+    midi,
+    note,
+    frequency,
+  };
 };
-const midiNotes = computed(()=>{
-	const notes = [];
-	for(let i = 36; i < 101; i++){
-		notes.push(getFullNoteInfo(i));
-	}
-	return notes;
+const midiNotes = computed(() => {
+  const notes = [];
+  for (let i = 36; i < 101; i++) {
+    notes.push(getFullNoteInfo(i));
+  }
+  return notes;
 });
 
-const tempo = inject<number>('tempo');
+const tempo = inject<number>("tempo");
 const quarterNoteDuration = computed(() => 60 / tempo!);
 
-const isBlack = (midi:number)=>{
-	const note = Tone.Frequency(midi, "midi").toNote();
-	return note.includes("#");
+const isBlack = (midi: number) => {
+  const note = Tone.Frequency(midi, "midi").toNote();
+  return note.includes("#");
 };
 
 const currentNote = ref<number>(60);
 
-const handleClick = (i:any)=>{
-	synth.triggerAttackRelease(i.note, '8n');
-	currentNote.value = i.midi;
-}
+const handleClick = (i: any) => {
+  synth.triggerAttackRelease(i.note, "8n");
+  currentNote.value = i.midi;
+};
 const keyboardMapping = {
   q: 36,
   "2": 37,
@@ -117,28 +117,19 @@ const handleKeyup = (e: KeyboardEvent) => {
     const keyReleaseTime = Date.now();
     const durationMs = keyReleaseTime - keyPressTime.value;
     const durationSec = durationMs / 1000;
-
-    // Calculate the closest note length based on the current BPM
-    const closestNoteLength = getClosestNoteLength(durationSec, quarterNoteDuration.value);
+    const closestNoteLength = getClosestNoteLength(
+      durationSec,
+      quarterNoteDuration.value,
+    );
 
     synth.triggerRelease();
-
-    // Push the note to the sequencer store
     sequencerStore.addNoteToSequence({
       midi: currentNote.value,
       frequency: Tone.Frequency(currentNote.value, "midi").toFrequency(),
       note: Tone.Frequency(currentNote.value, "midi").toNote(),
-      length: closestNoteLength as any,  // Cast to match ISample type
+      length: closestNoteLength as any,
     });
   }
-};
-const midiToKeyBoard = (midi: number) => {
-  for (let i in keyboardMapping) {
-    if (keyboardMapping[i] === midi) {
-      return i;
-    }
-  }
-  return null;
 };
 
 const getClosestNoteLength = (durationSec: number, quarterNoteSec: number) => {
@@ -147,8 +138,8 @@ const getClosestNoteLength = (durationSec: number, quarterNoteSec: number) => {
     "8n": quarterNoteSec / 2,
     "16n": quarterNoteSec / 4,
     "32n": quarterNoteSec / 8,
-		"64n": quarterNoteSec / 16,
-		"128n": quarterNoteSec / 32,
+    "64n": quarterNoteSec / 16,
+    "128n": quarterNoteSec / 32,
   };
 
   let closestNote = "4n";
@@ -176,34 +167,42 @@ onUnmounted(() => {
 });
 </script>
 <template>
-	<Sequencer/>
-<section class="col center tr m-4 fixed">
-	<Tempo />
-</section>
-<section  class="row center bottom-0 absolute text-xs">
-<div v-for="i in midiNotes" :key="i.midi">
-	<PianoKey :note="{midi: i.midi, frequency: i.frequency, note: i.note, length: '8n'}"
-		@click="handleClick(i)"
-	>
-		<template #default="{note}">
-			<div>{{ midiToKeyBoard(i.midi) }}</div>
-			<div class="h-12 w-4 sh"
-				:class="{
-					'bg-black text-white': isBlack(note.midi),
-					'bg-white': !isBlack(note.midi),
-					
-				}"
-				:style="
-				currentNote === note.midi ? 
-				{
-					'background': '#cf0 !important',
-					'border-radius': '2px'
-				} : {}
-				"
-			>		
-		</div>
-		</template>
-	</PianoKey>
-</div>
-</section>
+  <Auth>
+      <Sequencer />
+      <section class="col center tr m-2 fixed overflow-auto">
+        <Tempo />
+      </section>
+      <section class="row center bottom-4 fixed text-xs">
+        <div v-for="i in midiNotes" :key="i.midi">
+          <PianoKey
+            :note="{
+              midi: i.midi,
+              frequency: i.frequency,
+              note: i.note,
+              length: '8n',
+            }"
+            @click="handleClick(i)"
+          >
+            <template #default="{ note }">
+              <div
+                class="h-12 w-4 sh"
+                :class="{
+                  'bg-black text-white': isBlack(note.midi),
+                  'bg-white': !isBlack(note.midi),
+                }"
+                :style="
+                  currentNote === note.midi
+                    ? {
+                        background: '#cf0 !important',
+                        'border-radius': '2px',
+                      }
+                    : {}
+                "
+              ></div>
+            </template>
+          </PianoKey>
+        </div>
+      </section>
+</Auth>   
+
 </template>

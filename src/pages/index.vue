@@ -1,11 +1,13 @@
 <script setup lang="ts">
 useTitle("Home");
-useFavicon("/favicon.png");
+useFavicon("/favicon.svg");
 </script>
 <template>
-  <Synthetizer>
-    <template #default="{ synth }">
-      <Note :synth="synth" />
-    </template>
-  </Synthetizer>
+  <Auth v-slot="{ state }">
+    <Landing />
+    </Auth>
 </template>
+<route lang="yaml">
+meta:
+  layout: home
+</route>

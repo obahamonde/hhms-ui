@@ -1,21 +1,15 @@
 <template>
-  <div class="grid">
+  <div class="grid overflow-auto">
     <div v-for="midiNote in midiNotes" :key="midiNote.midi" class="grid-row">
       <div
         v-for="(note, index) in sequencerState.sequence"
         :key="index"
-        :class="[
-          'grid-item',
-          {
-            'is-playing':
-              note.midi === midiNote.midi && index === currentPosition,
-          },
-          { 'has-played': hasPlayed(note.midi, index) },
-        ]"
+        :class="{
+          'grid-item': true,
+          'bg-green': sequencerState.sequence[index].midi === midiNote.midi,
+        }"
         @click="playNote(note.note, note.length)"
-      >
-        {{ note.note === midiNote.note ? note.note : "" }}
-      </div>
+      ></div>
     </div>
   </div>
 </template>
@@ -25,6 +19,13 @@ import * as Tone from "tone";
 const sequencerStore = useSequencerStore();
 const sequencerState = sequencerStore.state;
 const synth = new Tone.Synth().toDestination();
+const midiNotes = computed(() => {
+  const notes = [];
+  for (let i = 36; i < 101; i++) {
+    notes.push(getFullNoteInfo(i));
+  }
+  return notes;
+});
 const playNote = (note: string, length: string) => {
   synth.triggerAttackRelease(note, length);
 };
@@ -32,11 +33,6 @@ const playNote = (note: string, length: string) => {
 const currentPosition = ref(0); // Or get it from the store if it's there
 const playedNotes = ref<number[]>([]);
 
-const hasPlayed = (midi: number, index: number) => {
-  return playedNotes.value.some(
-    (pos) => pos === index && sequencerState.sequence[pos]?.midi === midi,
-  );
-};
 watch(
   () => currentPosition.value,
   (newPosition) => {
@@ -54,13 +50,6 @@ const getFullNoteInfo = (midi: number) => {
     frequency,
   };
 };
-const midiNotes = computed(() => {
-  const notes = [];
-  for (let i = 36; i < 101; i++) {
-    notes.push(getFullNoteInfo(i));
-  }
-  return notes;
-});
 </script>
 <style>
 .grid {
@@ -72,16 +61,9 @@ const midiNotes = computed(() => {
   flex-direction: row;
 }
 .grid-item {
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
   border: 1px solid #ccc;
   text-align: center;
-  line-height: 50px;
-}
-.is-playing {
-  background-color: green;
-}
-.has-played {
-  background-color: lightgreen;
 }
 </style>

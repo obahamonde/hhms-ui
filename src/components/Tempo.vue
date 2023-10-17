@@ -11,8 +11,10 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div>
-    <label for="tempo">Tempo: {{ tempo }}</label>
+  <div class="row center gap-2">
+    <label for="tempo" class="text-title text-gray-500 text-xs"
+      >Tempo: {{ tempo }}</label
+    >
     <input id="tempo" type="range" min="40" max="220" v-model="tempo" />
   </div>
 </template>
